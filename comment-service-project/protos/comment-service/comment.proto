@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package comment;
+
+service CommentService {
+  rpc CreateComment(Comment) returns (Comment);
+  rpc GetComment(CommentId) returns (Comment);
+  rpc GetAllComment(GetAllCommentsRequest) returns (GetAllCommentsResponse);
+  rpc GetCommentsByPostId(PostId) returns (GetAllCommentsResponse);
+  rpc GetCommentsByUserId(PostId) returns (GetAllCommentsResponse);
+  rpc UpdateComment(Comment) returns (Comment);
+  rpc DeleteComment(CommentId) returns (DeleteResponse);
+}
+
+message Comment {
+  string id = 1;
+  string post_id = 2;
+  string user_id = 3;
+  string content = 4;
+  int64 likes = 5;
+  int64 dislikes = 6;
+  string created_at = 7;
+  string updated_at = 8;
+  string deleted_at = 9;
+}
+
+message CommentId{
+  string id = 1;
+}
+
+message PostId{
+  string post_id = 1;
+}
+
+message GetAllCommentsRequest{
+  int64 page = 1;
+  int64 limit = 2;
+}
+
+message GetAllCommentsResponse{
+  repeated Comment Comments = 1;
+}
+
+message DeleteResponse{
+  string message = 1;
+}
+
+
+
+message User {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string bio = 4;
+  string website = 5;
+  string username = 6;
+  string email = 7;
+  string password = 8;
+  string created_at = 9;
+  string updated_at = 10;
+  string deleted_at = 11;
+  repeated Post posts = 12;
+}
+
+message Post {
+  string id = 1;
+  string user_id = 2;
+  string title = 3;
+  string content = 4;
+  int64 likes = 5;
+  int64 dislikes = 6;
+  int64 views = 7;
+  string category = 8;
+  string created_at = 9;
+  string updated_at = 10;
+  string deleted_at = 11;
+  repeated Comment comment = 12;
+}
+

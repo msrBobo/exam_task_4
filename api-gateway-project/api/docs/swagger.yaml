@@ -1,0 +1,803 @@
+definitions:
+  models.AllPostWithCommentsAndOwnersResponse:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/models.Comment'
+        type: array
+      owner:
+        $ref: '#/definitions/models.User'
+      posts:
+        items:
+          $ref: '#/definitions/models.Post'
+        type: array
+    type: object
+  models.Comment:
+    properties:
+      content:
+        type: string
+      dislikes:
+        type: integer
+      id:
+        type: string
+      likes:
+        type: integer
+      post_id:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CreateComment:
+    properties:
+      content:
+        type: string
+      dislikes:
+        type: integer
+      id:
+        type: string
+      likes:
+        type: integer
+      post_id:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CreatePost:
+    properties:
+      category:
+        type: string
+      content:
+        type: string
+      dislikes:
+        type: integer
+      id:
+        type: string
+      likes:
+        type: integer
+      title:
+        type: string
+      user_id:
+        type: string
+      views:
+        type: integer
+    type: object
+  models.CreateUser:
+    properties:
+      bio:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+      website:
+        type: string
+    type: object
+  models.Post:
+    properties:
+      category:
+        type: string
+      content:
+        type: string
+      dislikes:
+        type: integer
+      id:
+        type: string
+      likes:
+        type: integer
+      title:
+        type: string
+      user_id:
+        type: string
+      views:
+        type: integer
+    type: object
+  models.RespUser:
+    properties:
+      bio:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+      website:
+        type: string
+    type: object
+  models.StandardErrorModel:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  models.User:
+    properties:
+      bio:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+      website:
+        type: string
+    type: object
+host: localhost:7007
+info:
+  contact: {}
+  description: api-gateway
+  title: EXAM_TASK_4_API
+  version: "1.0"
+paths:
+  /v1/allpostswithcommentsandowners:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all posts with comments and owners
+      parameters:
+      - description: User PAGES
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: User LIMIT
+        in: query
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.AllPostWithCommentsAndOwnersResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: Retrieves all posts with comments and owners
+      tags:
+      - GetAllPostsWithCommentsAndOwners
+  /v1/comment/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Api for GetComment
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateComment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetComment
+      tags:
+      - comment
+  /v1/comment/create:
+    post:
+      consumes:
+      - application/json
+      description: Api for CreateComment
+      parameters:
+      - description: createCommentModel
+        in: body
+        name: Comment
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateComment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateComment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateComment
+      tags:
+      - comment
+  /v1/comment/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Api for DeleteComment
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateComment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteComment
+      tags:
+      - comment
+  /v1/comment/update:
+    put:
+      consumes:
+      - application/json
+      description: Api for UpdateComment
+      parameters:
+      - description: createCommentModel
+        in: body
+        name: Comment
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateComment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateComment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: UpdateComment
+      tags:
+      - comment
+  /v1/comments:
+    get:
+      consumes:
+      - application/json
+      description: Api for GetAllComments
+      parameters:
+      - description: User PAGES
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: User LIMIT
+        in: query
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateComment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetAllComments
+      tags:
+      - comment
+  /v1/commentsby/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Api for GetCommentsByPostId
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateComment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetCommentsByPostId
+      tags:
+      - comment
+  /v1/commentsbyuser/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Api for GetCommentsByUserId
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateComment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetCommentsByUserId
+      tags:
+      - comment
+  /v1/getall:
+    get:
+      consumes:
+      - application/json
+      description: Api for getting all users
+      parameters:
+      - description: User PAGES
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: User LIMIT
+        in: query
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RespUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: ListUsers
+      tags:
+      - user
+  /v1/post/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Api for GetPost
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreatePost'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetPost
+      tags:
+      - post
+  /v1/post/create:
+    post:
+      consumes:
+      - application/json
+      description: Api for CreatePost
+      parameters:
+      - description: createUserModel
+        in: body
+        name: Post
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreatePost'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreatePost'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: CreatePost
+      tags:
+      - post
+  /v1/post/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Api for DeletePost
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Post'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: DeletePost
+      tags:
+      - post
+  /v1/post/update:
+    put:
+      consumes:
+      - application/json
+      description: Api for UpdatePost
+      parameters:
+      - description: createUserModel
+        in: body
+        name: Post
+        required: true
+        schema:
+          $ref: '#/definitions/models.Post'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreatePost'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: UpdatePost
+      tags:
+      - post
+  /v1/posts:
+    get:
+      consumes:
+      - application/json
+      description: Api for GetAllPosts
+      parameters:
+      - description: User PAGES
+        in: query
+        name: page
+        required: true
+        type: string
+      - description: User LIMIT
+        in: query
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreatePost'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetAllPosts
+      tags:
+      - post
+  /v1/postsbyuserid/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Api for GetPostsByUserId
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreatePost'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetPostsByUserId
+      tags:
+      - post
+  /v1/postsbyuseridwithcomments/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Api for GetPostsByUserIdWithComments
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreatePost'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetPostsByUserIdWithComments
+      tags:
+      - GetAllPostsWithCommentsAndOwners
+  /v1/user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Api for GetUser
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RespUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: GetUser
+      tags:
+      - user
+  /v1/user/create:
+    post:
+      consumes:
+      - application/json
+      description: Api for CreateUser
+      parameters:
+      - description: createUserModel
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RespUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateUser
+      tags:
+      - user
+  /v1/user/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Api for DeleteUser
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: DeleteUser
+      tags:
+      - user
+  /v1/user/update:
+    put:
+      consumes:
+      - application/json
+      description: Api for UpdateUser
+      parameters:
+      - description: createUserModel
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RespUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - ApiKeyAuth: []
+      summary: UpdateUser
+      tags:
+      - user
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

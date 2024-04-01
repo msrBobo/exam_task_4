@@ -1,0 +1,178 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15673:15673"  
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - backend
+
+  postgresdb:
+    container_name: postgresdb
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      PGDATA: /data/postgres
+      POSTGRES_DB: userdb,postdb,commentdb
+    volumes:
+      - db_data:/data/postgres
+    ports:
+      - "5433:5432" 
+    networks:
+      - backend
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres"]
+      interval: 30s
+      timeout: 40s
+      retries: 5
+    
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - backend
+    restart: unless-stopped
+  
+  user-service-project:
+    container_name: user-service-project
+    build: ./user-service-project
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      POSTGRES_HOST: postgresdb
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: userdb
+    ports:
+      - "2020:2020"
+    depends_on:
+      - postgresdb
+      - rabbitmq
+      - mongodb
+    links:
+      - mongodb
+      - postgresdb
+      - rabbitmq
+    networks:
+      - backend
+
+  post-service-project:
+    container_name: post-service-project
+    build: ./post-service-project
+    ports:
+      - "3030:3030"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      POSTGRES_HOST: postgresdb
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: userdb
+    depends_on:
+      - postgresdb
+      - rabbitmq
+      - mongodb
+    links:
+      - mongodb
+      - postgresdb
+      - rabbitmq
+    networks:
+      - backend
+
+  comment-service-project:
+    container_name: comment-service-project
+    build: ./comment-service-project
+    ports:
+      - "4040:4040"
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      POSTGRES_HOST: postgresdb
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: userdb
+    depends_on:
+      - postgresdb
+      - rabbitmq
+      - mongodb
+    links:
+      - mongodb
+      - postgresdb
+      - rabbitmq
+    networks:
+      - backend
+   
+  api-gateway-project:
+    container_name: api-gateway-project
+    build: ./api-gateway-project
+    ports:
+      - "7007:7007"
+    environment:
+      RABBITMQ_HOST: rabbitmq 
+      RABBITMQ_PORT: 5672
+      USER_SERVICE_HOST: "user-service-project"
+      USER_SERVICE_PORT: 2020
+      POST_SERVICE_HOST: "post-service-project"
+      POST_SERVICE_PORT: 3030
+      COMMENT_SERVICE_HOST: "comment-service-project"
+      COMMENT_SERVICE_PORT: 4040
+    depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    networks:
+      - backend
+
+  migrate:
+    image: migrate/migrate
+    volumes:
+      - ./migrations:/migrations
+    command: ["-path", "/migrations", "-database", "postgres://postgres:1234@postgresdb:5432/postgres?sslmode=disable", "-verbose", "up"]
+    depends_on:
+      - postgresdb
+    networks:
+      - backend
+
+
+
+
+  # migrate-table:
+  #     image: migrate/migrate
+  #     volumes:
+  #       - ./migrations:/migrations
+  #     command: ["-path", "/migrations", "-database", "postgres://postgres:1234@postgresdb:5432/postgres?sslmode=disable", "up", "1"]
+  #     depends_on:
+  #       - postgresdb
+  #     networks:
+  #       - backend
+
+
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  db_data:
+  mongodb_data:
+      driver: local

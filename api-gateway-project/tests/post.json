@@ -1,0 +1,8 @@
+{
+    "id": "post_id_123",
+    "userId": "user_id_456",
+    "title": "Sample Post Title",
+    "content": "This is the content of the sample post.",
+    "category": "Sample Category"
+  }
+  

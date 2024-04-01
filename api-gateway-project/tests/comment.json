@@ -1,0 +1,9 @@
+{
+    "id": "testid",
+    "postId": "testpostid",
+    "userId": "testuserid",
+    "content": "testcontent",
+    "likes": 0,
+    "dislikes": 0
+  }
+  

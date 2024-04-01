@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package post;
+
+service PostService {
+  rpc CreatePost(Post) returns (Post);
+  rpc GetPost(PostId) returns (Post);
+  rpc GetAllPost(GetAllPostsRequest) returns (GetAllPostsResponse);
+  rpc GetPostsByUserId(UserId) returns (GetAllPostsResponse);
+  rpc UpdatePost(Post) returns (Post);
+  rpc DeletePost(PostId) returns (DeleteResponse);
+}
+
+message DeleteResponse{
+  string message = 1;
+}
+
+message PostId{
+  string post_id = 1;
+}
+
+message UserId {
+  string user_id = 1;
+}
+
+message GetAllPostsRequest{
+  int64 page = 1;
+  int64 limit = 2;
+}
+
+message GetAllPostsResponse{
+  repeated Post posts = 1;
+}
+
+message User {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string bio = 4;
+  string website = 5;
+  string username = 6;
+  string email = 7;
+  string password = 8;
+  string created_at = 9;
+  string updated_at = 10;
+  string deleted_at = 11;
+  repeated Post posts = 12;
+}
+
+message Post {
+  string id = 1;
+  string user_id = 2;
+  string title = 3;
+  string content = 4;
+  int64 likes = 5;
+  int64 dislikes = 6;
+  int64 views = 7;
+  string category = 8;
+  string created_at = 9;
+  string updated_at = 10;
+  string deleted_at = 11;
+}
+
+message Comment {
+  string id = 1;
+  string post_id = 2;
+  string user_id = 3;
+  string content = 4;
+  int64 likes = 5;
+  int64 dislikes = 6;
+  string created_at = 7;
+  string updated_at = 8;
+  string deleted_at = 9;
+}
