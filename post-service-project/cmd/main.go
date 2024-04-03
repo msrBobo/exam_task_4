@@ -30,7 +30,7 @@ func main() {
 	log := logger.New(cfg.LogLevel, "post-service")
 	defer logger.Cleanup(log)
 
-	createPostConsumer, err := c.NewRabbitMQConsumer("amqp://guest:guest@rabbitmq:5672/", "createPost")
+	createPostConsumer, err := c.NewRabbitMQConsumer("amqp://guest:guest@rabbitmq:5673/", "createPost")
 	if err != nil {
 		fmt.Printf("Error while initializing createUser consumer: %v", err)
 		return

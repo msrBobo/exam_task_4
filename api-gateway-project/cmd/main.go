@@ -35,7 +35,7 @@ func main() {
 		return
 	}
 	
-	writer, err := producer.NewRabbitMQProducer("amqp://guest:guest@rabbitmq:5672/")
+	writer, err := producer.NewRabbitMQProducer("amqp://guest:guest@rabbitmq:5673/")
 	if err != nil {
 		fmt.Println(err)
 		log.Fatal("error creating RabbitMQ producer")

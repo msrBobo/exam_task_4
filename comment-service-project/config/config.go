@@ -26,11 +26,11 @@ type Config struct {
 func Load() Config {
 	c := Config{}
 	c.Environment = cast.ToString(getOrReturnDefault("ENVIRONMENT", "develop"))
-	c.MongoURI = cast.ToString(getOrReturnDefault("MONGO_URI", "mongodb://mongodb:27017"))
+	c.MongoURI = cast.ToString(getOrReturnDefault("MONGO_URI", "mongodb://mongodb:27018"))
 	c.MongoDatabase = cast.ToString(getOrReturnDefault("MONGO_DATABASE", "commentdb"))
 
 	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "postgresdb"))
-	c.PostgresPort = cast.ToString(getOrReturnDefault("POSTGRES_PORT", "5433"))
+	c.PostgresPort = cast.ToString(getOrReturnDefault("POSTGRES_PORT", "5432"))
 	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "postgres"))
 	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "1234"))
 	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "commentdb"))

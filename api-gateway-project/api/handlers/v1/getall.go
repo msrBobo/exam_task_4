@@ -7,7 +7,6 @@ import (
 	pbp "exam_task_4/api-gateway-project/genproto/post-service"
 	pbu "exam_task_4/api-gateway-project/genproto/user-service"
 	l "exam_task_4/api-gateway-project/pkg/logger"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -58,7 +57,6 @@ func (h *handlerV1) GetPostsAndCommentsByUserId(c *gin.Context) {
 		respPosts = append(respPosts, resp)
 		userId = post.UserId
 	}
-	fmt.Println(userId)
 	commentsResponse, err := h.serviceManager.CommentService().GetCommentsByUserId(
 		ctx, &pbc.PostId{
 			PostId: userId,
@@ -120,21 +118,18 @@ func (h *handlerV1) GetAllPostsWithCommentsAndOwners(c *gin.Context) {
 		h.log.Error("failed to list posts", l.Error(err))
 		return
 	}
-
 	commentsResponse, err := h.serviceManager.CommentService().GetAllComment(ctx, &pbc.GetAllCommentsRequest{Page: int64(PageNum), Limit: int64(LimitNum)})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		h.log.Error("failed to list comments", l.Error(err))
 		return
 	}
-
 	usersResponse, err := h.serviceManager.UserService().GetAllUsers(ctx, &pbu.GetAllUsersRequest{Page: int64(PageNum), Limit: int64(LimitNum)})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		h.log.Error("failed to list users", l.Error(err))
 		return
 	}
-
 	var respPosts []models.AllPostWithCommentsAndOwnersResponse
 	for _, post := range postsResponse.Posts {
 		respPost := models.AllPostWithCommentsAndOwnersResponse{

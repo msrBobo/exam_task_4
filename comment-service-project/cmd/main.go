@@ -34,7 +34,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error creating gRPC client", logger.Error(err))
 	}
-	createPostConsumer, err := c.NewRabbitMQConsumer("amqp://guest:guest@rabbitmq:5672/", "createComment")
+	createPostConsumer, err := c.NewRabbitMQConsumer("amqp://guest:guest@rabbitmq:5673/", "createComment")
 	if err != nil {
 		fmt.Printf("Error while initializing createUser consumer: %v", err)
 		return
