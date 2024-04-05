@@ -8,7 +8,7 @@ import (
 	"exam_task_4/api-gateway-project/pkg/logger"
 	"exam_task_4/api-gateway-project/queue/rabbitmq/producer"
 	"exam_task_4/api-gateway-project/service"
-
+	"github.com/gin-contrib/cors"
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -27,10 +27,11 @@ type Option struct {
 // @host localhost:7007
 
 // Constructor
-// @Title EXAM_TASK_4_API
+// @Title EXAM_TASK_4_APIS
 // @version 1.0
 // @description api-gateway
 // @securityDefinitions.apikey BearerAuth
+// @host 18.133.228.143:7007
 // @in header
 // @name Authorization
 func New(option *Option) *gin.Engine {
@@ -39,6 +40,13 @@ func New(option *Option) *gin.Engine {
 	jwtHandler := token.JWTHandler{
 		SignKey: option.Conf.SignInKey,
 	}
+
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowAllOrigins = true
+	corsConfig.AllowCredentials = true
+	corsConfig.AllowHeaders = append(corsConfig.AllowHeaders, "*")
+	
+	router.Use(cors.New(corsConfig))
 
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())

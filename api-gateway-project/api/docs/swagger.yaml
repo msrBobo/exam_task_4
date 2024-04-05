@@ -146,7 +146,7 @@ host: localhost:7007
 info:
   contact: {}
   description: api-gateway
-  title: EXAM_TASK_4_API
+  title: EXAM_TASK_4_APIS
   version: "1.0"
 paths:
   /v1/allpostswithcommentsandowners:

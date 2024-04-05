@@ -1272,7 +1272,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:7007",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "EXAM_TASK_4_API",
+	Title:            "EXAM_TASK_4_APIS",
 	Description:      "api-gateway",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
