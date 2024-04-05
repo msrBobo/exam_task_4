@@ -28,7 +28,7 @@ type Option struct {
 // @Title EXAM_TASK_4_API
 // @version 1.0
 // @description api-gateway
-// @host 18.133.228.143:7007
+// @host localhost:7007
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization

@@ -142,7 +142,7 @@ definitions:
       website:
         type: string
     type: object
-host: 18.133.228.143:7007
+host: localhost:7007
 info:
   contact: {}
   description: api-gateway
