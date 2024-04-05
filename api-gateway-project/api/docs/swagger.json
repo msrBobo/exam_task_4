@@ -6,7 +6,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:7007",
+    "host": "18.133.228.143:7007",
     "paths": {
         "/v1/allpostswithcommentsandowners": {
             "get": {
