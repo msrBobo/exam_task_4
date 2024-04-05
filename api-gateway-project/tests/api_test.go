@@ -175,17 +175,3 @@ func TestApiComment(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, deleteRes.Code)
 }
-
-//kafka mockProducer
-// mockProducer, err := k.KafkaProducer.Produce(&k.MockKafkaProducer{}, "test_topic", res.Body.Bytes())
-// assert.NoError(t, err)
-// err = k.KafkaProducer.Close(&k.MockKafkaProducer{})
-// assert.NoError(t, err)
-// require.Equal(t, mockProducer, "topic submitted successfully")
-
-// //kafka MockKafkaConsumer
-// mockConsumer, err := k.KafkaConsumer.Consume(&k.MockKafkaConsumer{}, "test_consumer")
-// assert.NoError(t, err)
-// err = k.KafkaConsumer.Close(&k.MockKafkaConsumer{})
-// assert.NoError(t, err)
-// require.Equal(t, string(mockConsumer), "Mock message")
