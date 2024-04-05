@@ -24,8 +24,6 @@ type Option struct {
 	Writer         producer.RabbitMQProducer
 }
 
-// @host localhost:7007
-
 // Constructor
 // @Title EXAM_TASK_4_APIS
 // @version 1.0
@@ -37,16 +35,15 @@ type Option struct {
 func New(option *Option) *gin.Engine {
 	router := gin.New()
 
-	jwtHandler := token.JWTHandler{
-		SignKey: option.Conf.SignInKey,
-	}
-
 	corsConfig := cors.DefaultConfig()
 	corsConfig.AllowAllOrigins = true
 	corsConfig.AllowCredentials = true
 	corsConfig.AllowHeaders = append(corsConfig.AllowHeaders, "*")
-	
 	router.Use(cors.New(corsConfig))
+
+	jwtHandler := token.JWTHandler{
+		SignKey: option.Conf.SignInKey,
+	}
 
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
