@@ -24,11 +24,12 @@ type Option struct {
 	Writer         producer.RabbitMQProducer
 }
 
+// @host localhost:7007
+
 // Constructor
 // @Title EXAM_TASK_4_API
 // @version 1.0
 // @description api-gateway
-// @host localhost:7007
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
