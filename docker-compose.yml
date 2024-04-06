@@ -25,7 +25,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       PGDATA: /data/postgres
-      POSTGRES_DB: userdb,postdb,commentdb
+      POSTGRES_DB: userdb
     volumes:
       - db_data:/data/postgres
     ports:
@@ -145,13 +145,15 @@ services:
 
   migrate:
     image: migrate/migrate
-    volumes:
-      - ./migrations:/migrations
-    command: ["-path", "/migrations", "-database", "postgres://postgres:1234@postgresdb:5432/postgres?sslmode=disable", "-verbose", "up"]
-    depends_on:
-      - postgresdb
     networks:
       - backend
+    volumes:
+      - ./migrations:/migrations
+    command: -path /migrations -database postgres://postgres:1234@postgresdb:5432/userdb?sslmode=disable -verbose up
+    links:
+      - postgresdb
+    depends_on:
+      - "postgresdb"
 
 networks:
   backend:
